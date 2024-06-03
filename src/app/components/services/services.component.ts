@@ -13,15 +13,15 @@ export class ServicesComponent {
   services = [
     {
       title: 'Language Lessons for Students',
-      description: 'Providing language lessons for students.',
+      description: 'We enable students to find a suitable teacher and a classroom, students can choose which language and which level to learn based on their preference.',
     },
     {
       title: 'Platform for Teachers',
-      description: 'Providing a platform for teachers to teach languages.',
+      description: 'We enable language teachers to set up language classes and offer language lessons to students on any level. Teachers can set a fee and number of students to take in.',
     },
     {
-      title: 'Resources to Learn German',
-      description: 'Resources to learn German with.',
+      title: 'Resources to Learn languages',
+      description: 'We provide enthusiastic language learners free resources to practice and improve their language skills. Currently we provide resources for German.',
     },
   ];
 }

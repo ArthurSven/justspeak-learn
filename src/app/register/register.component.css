@@ -1,0 +1,19 @@
+.hinter
+{
+  height: 100vh;
+}
+
+.jumbotron-fluid {
+  padding: 2rem 1rem;
+}
+
+.card {
+  max-width: 720px;
+  margin: auto;
+}
+
+.btn {
+  width: 100%;
+}
+
+
