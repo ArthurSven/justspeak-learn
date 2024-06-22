@@ -14,11 +14,17 @@ export class AuthguardService {
     state: RouterStateSnapshot
   ): boolean {
     const username = this.authService.getCurrentUser();
-    if (username) {
-      return true;
-    } else {
+
+    // Cast next.data to any and access expectedRole
+    const expectedRole = (next.data as any)['expectedRole'] as string;
+    const currentRole = this.authService.getRole();
+
+    if (expectedRole !== currentRole) {
       this.router.navigate(['/login']);
       return false;
     }
+
+    // Allow access if authenticated and roles match
+    return true;
   }
 }

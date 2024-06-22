@@ -34,29 +34,37 @@ export const routes: Routes = [
   {
     path: 'admin-dashboard',
     component: AdmindashboardComponent,
+    canActivate: [AuthguardService],
+    data: { expectedRole: 'Admin' },
     children: [
-      {path: 'adminhome', component: AdminhomeComponent},
-      {path: 'adminusermanagement', component: AdminusermanagementComponent},
-      {path: 'queries', component: QueriesComponent}
-    ]
+      { path: 'adminhome', component: AdminhomeComponent },
+      { path: 'adminusermanagement', component: AdminusermanagementComponent },
+      { path: 'queries', component: QueriesComponent },
+    ],
   },
   {
     path: 'teacher-dashboard',
     component: TeacherdashboardComponent,
     canActivate: [AuthguardService],
+    data: { expectedRole: 'Teacher' },
     children: [
-      {path: 'teacherhome', component: TeacherhomeComponent},
-      {path: 'teachersettings', component: TeachersettingsComponent},
-      {path: 'teacherclassmanagement', component: TeacherclassmanagementComponent}
-    ]
+      { path: 'teacherhome', component: TeacherhomeComponent },
+      { path: 'teachersettings', component: TeachersettingsComponent },
+      {
+        path: 'teacherclassmanagement',
+        component: TeacherclassmanagementComponent,
+      },
+    ],
   },
   {
     path: 'student-dashboard',
     component: StudentdashboardComponent,
+    canActivate: [AuthguardService],
+    data: { expectedRole: 'Student' },
     children: [
-      {path: 'studenthome', component: StudentdashboardComponent},
-      {path: 'studentsettings', component: StudentsettingsComponent}
-    ]
+      { path: 'studenthome', component: StudentdashboardComponent },
+      { path: 'studentsettings', component: StudentsettingsComponent },
+    ],
   },
   { path: '**', component: ErrorComponent },
   //No routes after this point

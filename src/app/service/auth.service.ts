@@ -15,7 +15,8 @@ interface LoginResponse {
   providedIn: 'root',
 })
 export class AuthService {
-    private currentUser: string | null = null;
+  private currentUser: string | null = null;
+  private currentRole: string | null = null;
   private loginUrl = 'http://localhost:8080/user/auth/login';
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -30,7 +31,7 @@ export class AuthService {
             localStorage.setItem('message', response.message);
             localStorage.setItem('token', response.token);
             localStorage.setItem('role', response.role);
-            localStorage.setItem('username', username)
+            localStorage.setItem('username', username);
           }
           return response;
         })
@@ -38,7 +39,7 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return this.currentRole || localStorage.getItem('token');
   }
 
   getCurrentUser(): string | null {
@@ -49,8 +50,13 @@ export class AuthService {
     return localStorage.getItem('role');
   }
 
+  isAuthenticated(): boolean {
+    return this.getCurrentUser() !== null && this.getRole() !== null;
+  }
+
   logout(): void {
     this.currentUser = null;
+    this.currentRole = null;
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     this.router.navigate(['/login']);
