@@ -20,9 +20,8 @@ import { ToastComponent } from '../components/toast/toast.component';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent implements OnInit {
-  showToast = false;
-  toastMessage = '';
-  toastType: 'success' | 'error' = 'success';
+  message: string | null = null;
+  alertClass: string | null = null;
 
   registrationForm: FormGroup = this.fb.group({
     firstName: ['', Validators.required],
@@ -54,30 +53,20 @@ export class RegisterComponent implements OnInit {
         role: this.registrationForm.value.role,
       };
 
-      this.showToast = true;
-
       this.userService.createUser(user).subscribe(
         (response) => {
           console.log('User registered successfully:', response);
-          this.showToastMessage(response.message, 'success');
+          this.message = 'Your account has been successfully created';
+          this.alertClass = 'alert-success';
           this.registrationForm.reset(); // Clear form data after successful registration
         },
         (error) => {
           console.error('Error registering user:', error);
-          this.showToastMessage(
-            'Error registering user. Please try again.',
-            'error'
-          );
+          this.message = 'There was an error creating your account, pleas try again';
+          this.alertClass = 'alert-danger';
         }
       );
     }
     // Perform registration logic here
-  }
-
-  public showToastMessage(message: string, type: 'success' | 'error'): void {
-    this.toastMessage = message;
-    this.toastType = type;
-    this.showToast = true;
-    setTimeout(() => (this.showToast = false), 8000);
   }
 }

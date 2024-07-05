@@ -3,11 +3,12 @@ import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -16,6 +17,8 @@ export class LoginComponent implements OnInit {
     username: ['', Validators.required],
     password: ['', Validators.required],
   });
+
+  message: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -47,14 +50,17 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/student-dashboard']);
             } else {
               console.error('Invalid role:', role);
+              this.message = 'Invalid role';
             }
           } else {
             // Handle login failure
             console.error('Login failed:', response);
+            this.message = "Login failed, Invalid token"
           }
         },
         error: (err) => {
           console.error('Login error:', err);
+          this.message = "Login failed: Username or Password is wrong"
         }
       })
     }

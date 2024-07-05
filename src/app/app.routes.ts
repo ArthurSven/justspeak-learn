@@ -57,6 +57,7 @@ export const routes: Routes = [
     ],
   },
   {
+    
     path: 'student-dashboard',
     component: StudentdashboardComponent,
     canActivate: [AuthguardService],

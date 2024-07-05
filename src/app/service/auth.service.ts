@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Location } from '@angular/common'; // Import Location
 import { map } from 'rxjs/operators';
 
 interface LoginResponse {
@@ -19,7 +20,11 @@ export class AuthService {
   private currentRole: string | null = null;
   private loginUrl = 'http://localhost:8080/user/auth/login';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private location: Location
+  ) {}
 
   login(username: string, password: string): Observable<LoginResponse> {
     return this.http
@@ -59,6 +64,7 @@ export class AuthService {
     this.currentRole = null;
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    this.location.replaceState('/');
     this.router.navigate(['/login']);
   }
 }
