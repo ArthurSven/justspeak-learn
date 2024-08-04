@@ -1,0 +1,8 @@
+.bg-light {
+  padding: 20px;
+}
+
+.card {
+  height: 100%;
+  border-radius: 15px; /* Ensure rounded edges */
+}

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common'; // Import Location
 import { map } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
 
 interface LoginResponse {
   success: boolean;
@@ -23,7 +24,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private cookieService: CookieService
   ) {}
 
   login(username: string, password: string): Observable<LoginResponse> {
@@ -33,10 +35,10 @@ export class AuthService {
         map((response) => {
           if (response.token && response.role && response.message) {
             this.currentUser = username;
-            localStorage.setItem('message', response.message);
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('role', response.role);
-            localStorage.setItem('username', username);
+            this.cookieService.set('message', response.message);
+            this.cookieService.set('token', response.token);
+            this.cookieService.set('role', response.role);
+            this.cookieService.set('username', username);
           }
           return response;
         })
@@ -44,15 +46,15 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return this.currentRole || localStorage.getItem('token');
+    return this.currentRole || this.cookieService.get('token') //.getItem('token');
   }
 
   getCurrentUser(): string | null {
-    return this.currentUser || localStorage.getItem('username');
+    return this.currentUser || this.cookieService.get('username');
   }
 
   getRole(): string | null {
-    return localStorage.getItem('role');
+    return this.cookieService.get('role');
   }
 
   isAuthenticated(): boolean {
@@ -62,8 +64,8 @@ export class AuthService {
   logout(): void {
     this.currentUser = null;
     this.currentRole = null;
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
+    this.cookieService.delete('token');
+    this.cookieService.delete('role');
     this.location.replaceState('/');
     this.router.navigate(['/login']);
   }

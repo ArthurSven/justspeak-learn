@@ -11,10 +11,20 @@ import { tap } from 'rxjs';
 export class UserService {
   private apiUrl = 'http://localhost:8080/user/auth/register';
 
+  private userApiUrl = 'http://localhost:8080/justspeak/user/';
+
   constructor(private http: HttpClient) {}
 
   createUser(user: User): Observable<any> {
-    console.log()
+    console.log();
     return this.http.post<any>(this.apiUrl, user);
+  }
+
+  getTeacherCount(): Observable<number> {
+    return this.http.get<number>(`${this.userApiUrl}count-all-teachers`);
+  }
+
+  getStudentCount(): Observable<number> {
+    return this.http.get<number>(`${this.userApiUrl}count-all-students`);
   }
 }

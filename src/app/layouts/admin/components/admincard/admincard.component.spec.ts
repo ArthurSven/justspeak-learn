@@ -1,0 +1,23 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { AdmincardComponent } from './admincard.component';
+
+describe('AdmincardComponent', () => {
+  let component: AdmincardComponent;
+  let fixture: ComponentFixture<AdmincardComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AdmincardComponent]
+    })
+    .compileComponents();
+    
+    fixture = TestBed.createComponent(AdmincardComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
