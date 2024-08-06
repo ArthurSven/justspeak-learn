@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../model/user';
@@ -26,5 +26,12 @@ export class UserService {
 
   getStudentCount(): Observable<number> {
     return this.http.get<number>(`${this.userApiUrl}count-all-students`);
+  }
+
+  getAllUsers(page: number, size: number): Observable<any> {
+    const params = new HttpParams()
+    .set('page', page.toString())
+    .set('size', size.toString());
+    return this.http.get<any>(`${this.userApiUrl}get-all-users`, { params });
   }
 }

@@ -37,6 +37,7 @@ export const routes: Routes = [
     canActivate: [AuthguardService],
     data: { expectedRole: 'Admin' },
     children: [
+      { path: '', component: AdminhomeComponent },
       { path: 'adminhome', component: AdminhomeComponent },
       { path: 'adminusermanagement', component: AdminusermanagementComponent },
       { path: 'queries', component: QueriesComponent },
@@ -48,6 +49,7 @@ export const routes: Routes = [
     canActivate: [AuthguardService],
     data: { expectedRole: 'Teacher' },
     children: [
+      { path: '', component: TeacherhomeComponent },
       { path: 'teacherhome', component: TeacherhomeComponent },
       { path: 'teachersettings', component: TeachersettingsComponent },
       {
@@ -57,12 +59,12 @@ export const routes: Routes = [
     ],
   },
   {
-    
     path: 'student-dashboard',
     component: StudentdashboardComponent,
     canActivate: [AuthguardService],
     data: { expectedRole: 'Student' },
     children: [
+      { path: '', component: StudentdashboardComponent },
       { path: 'studenthome', component: StudentdashboardComponent },
       { path: 'studentsettings', component: StudentsettingsComponent },
     ],

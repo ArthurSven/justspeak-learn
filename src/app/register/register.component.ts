@@ -51,6 +51,7 @@ export class RegisterComponent implements OnInit {
         email: this.registrationForm.value.email,
         password: this.registrationForm.value.password,
         role: this.registrationForm.value.role,
+        dateJoined: Date()
       };
 
       this.userService.createUser(user).subscribe(
