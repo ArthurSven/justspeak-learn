@@ -30,8 +30,12 @@ export class UserService {
 
   getAllUsers(page: number, size: number): Observable<any> {
     const params = new HttpParams()
-    .set('page', page.toString())
-    .set('size', size.toString());
+      .set('page', page.toString())
+      .set('size', size.toString());
     return this.http.get<any>(`${this.userApiUrl}get-all-users`, { params });
+  }
+
+  getUserProfile(userid: string): Observable<User> {
+    return this.http.get<User>(`${this.userApiUrl}get-user/${userid}`);
   }
 }

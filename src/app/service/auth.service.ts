@@ -11,6 +11,12 @@ interface LoginResponse {
   message?: string;
   token?: string;
   role?: string;
+  firstname?: string;
+  lastname?: string;
+  username?: string;
+  email?: string;
+  date?: string;
+  profile?: Blob;
 }
 
 @Injectable({
@@ -39,6 +45,14 @@ export class AuthService {
             this.cookieService.set('token', response.token);
             this.cookieService.set('role', response.role);
             this.cookieService.set('username', username);
+            this.cookieService.set(
+              'profile',
+              response.profile ? response.profile.toString() : ''
+            );
+            this.cookieService.set('email', response.email ?? '');
+            this.cookieService.set('date', response.date ?? '');
+            this.cookieService.set('firstname', response.firstname ?? '');
+            this.cookieService.set('lastname', response.lastname ?? '');
           }
           return response;
         })
@@ -46,7 +60,27 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return this.currentRole || this.cookieService.get('token') //.getItem('token');
+    return this.currentRole || this.cookieService.get('token'); //.getItem('token');
+  }
+
+  getUsername(): string | null {
+    return this.cookieService.get('username');
+  }
+
+  getFirstname(): string | null {
+    return this.cookieService.get('firstname');
+  }
+
+  getLastname(): string | null {
+    return this.cookieService.get('lastname');
+  }
+
+  getEmail(): string | null {
+    return this.cookieService.get('email');
+  }
+
+  getDate(): string | null {
+    return this.cookieService.get('date');
   }
 
   getCurrentUser(): string | null {
@@ -66,6 +100,10 @@ export class AuthService {
     this.currentRole = null;
     this.cookieService.delete('token');
     this.cookieService.delete('role');
+    this.cookieService.delete('username');
+    this.cookieService.delete('firstname');
+    this.cookieService.delete('lastname');
+    this.cookieService.delete('email');
     this.location.replaceState('/');
     this.router.navigate(['/login']);
   }
